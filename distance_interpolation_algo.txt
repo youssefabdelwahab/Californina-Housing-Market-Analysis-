@@ -1,0 +1,35 @@
+def distance_formula(lat1, lat2, lon1, lon2):
+    """
+    This function calculates the distance in KM between pairs of Lat/Lon Coordinates 
+
+    Parameters: 
+    -----------
+    lat1: int
+        Latitude of location 1
+    lat2: int 
+        Latitude of location 2 
+    lon1: int
+        Longtidue of location 1
+    lon2: int
+        Longitude of location 2 
+    
+    Returns: 
+    --------
+    6371* asin(sqrt(a)): int
+    """
+    p = pi/180
+    a = 0.5 - cos((lat2-lat1)*p)/2 + cos(lat1*p) * cos(lat2*p) * (1-cos((lon2-lon1)*p))/2
+    return 6371* asin(sqrt(a))
+
+closest_neighborhoods = {}
+for neighborhood_1 in missing_data_neighborhood_coordinates.iterrows():
+    lat1 = neighborhood_1[1][1]
+    lon1 = neighborhood_1[1][2]
+    distances = {} 
+
+    for neighborhood_2 in full_data_neighborhood_coordinates.iterrows():
+        lat2 = neighborhood_2[1][1]
+        lon2 = neighborhood_2[1][2]
+        distances[neighborhood_2[1][0]] = distance_formula(lat1,lat2,lon1,lon2)
+    closest_place = [min(distances, key = distances.get), distances[min(distances, key=distances.get)]]
+    closest_neighborhoods[neighborhood_1[1][0]] = closest_place
